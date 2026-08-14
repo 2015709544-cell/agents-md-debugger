@@ -1,0 +1,34 @@
+name: Codex behavior mismatch
+description: Report a safe, reproducible difference between this preview and Codex.
+title: "[Mismatch]: "
+labels: [behavior-mismatch]
+body:
+  - type: markdown
+    attributes:
+      value: Do not paste secrets, private instructions, or an unredacted Codex log.
+  - type: textarea
+    id: layout
+    attributes:
+      label: Minimal repository layout
+      description: List only the files and scopes needed to reproduce the difference.
+    validations:
+      required: true
+  - type: textarea
+    id: debugger
+    attributes:
+      label: Debugger result
+      description: Include the command and redacted output.
+    validations:
+      required: true
+  - type: textarea
+    id: codex
+    attributes:
+      label: Observed Codex behavior
+      description: Explain the difference without sharing private instruction contents.
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Relevant public documentation
+      description: Add an official documentation URL when available.

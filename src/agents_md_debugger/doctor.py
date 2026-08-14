@@ -22,11 +22,22 @@ def diagnose(root: str | Path, settings: Settings) -> list[Diagnostic]:
         by_scope[item.scope].append(item)
         rel = _relative(item.path, project_root)
         if item.status == "empty":
-            diagnostics.append(Diagnostic("AMD001", "warning", rel, "Empty instruction file is ignored by Codex."))
+            diagnostics.append(
+                Diagnostic("AMD001", "warning", rel, "Empty instruction file is ignored by Codex.")
+            )
         if item.status == "shadowed":
-            diagnostics.append(Diagnostic("AMD002", "warning", rel, item.reason or "Instruction file is shadowed."))
+            diagnostics.append(
+                Diagnostic("AMD002", "warning", rel, item.reason or "Instruction file is shadowed.")
+            )
         if item.size_bytes > settings.max_bytes:
-            diagnostics.append(Diagnostic("AMD003", "warning", rel, f"File is {item.size_bytes} bytes, above the configured {settings.max_bytes}-byte project budget."))
+            diagnostics.append(
+                Diagnostic(
+                    "AMD003",
+                    "warning",
+                    rel,
+                    f"File is {item.size_bytes} bytes, above the configured {settings.max_bytes}-byte project budget.",
+                )
+            )
 
     instruction_paths = {Path(item.path).resolve() for item in files}
     for scope, items in by_scope.items():
@@ -40,7 +51,14 @@ def diagnose(root: str | Path, settings: Settings) -> list[Diagnostic]:
         ]
         if not descendants:
             candidate = next((item for item in items if item.status == "candidate"), items[0])
-            diagnostics.append(Diagnostic("AMD004", "note", _relative(candidate.path, project_root), "No non-instruction files exist in this directory scope."))
+            diagnostics.append(
+                Diagnostic(
+                    "AMD004",
+                    "note",
+                    _relative(candidate.path, project_root),
+                    "No non-instruction files exist in this directory scope.",
+                )
+            )
 
     seen_lines: dict[str, tuple[str, int]] = {}
     for item in files:
@@ -54,7 +72,14 @@ def diagnose(root: str | Path, settings: Settings) -> list[Diagnostic]:
                 continue
             previous = seen_lines.get(normalized)
             if previous and previous[0] != rel:
-                diagnostics.append(Diagnostic("AMD005", "note", f"{rel}:{number}", f"Duplicates instruction text from {previous[0]}:{previous[1]}."))
+                diagnostics.append(
+                    Diagnostic(
+                        "AMD005",
+                        "note",
+                        f"{rel}:{number}",
+                        f"Duplicates instruction text from {previous[0]}:{previous[1]}.",
+                    )
+                )
             else:
                 seen_lines[normalized] = (rel, number)
 

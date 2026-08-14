@@ -34,8 +34,15 @@ def render_explanation(explanation: Explanation) -> str:
     for index, item in enumerate(explanation.project_files, 1):
         path = _display(item.path, explanation.project_root)
         suffix = f", {item.reason}" if item.reason else ""
-        lines.append(f"  {index}. {path} [scope {item.scope}/**, {item.loaded_bytes}/{item.size_bytes} bytes, {item.status}{suffix}]")
-    lines.extend(["", "Later files have higher precedence. This tool does not interpret semantic conflicts inside Markdown."])
+        lines.append(
+            f"  {index}. {path} [scope {item.scope}/**, {item.loaded_bytes}/{item.size_bytes} bytes, {item.status}{suffix}]"
+        )
+    lines.extend(
+        [
+            "",
+            "Later files have higher precedence. This tool does not interpret semantic conflicts inside Markdown.",
+        ]
+    )
     return "\n".join(lines)
 
 
@@ -45,7 +52,9 @@ def render_scan(items: list[InstructionFile], root: str) -> str:
         lines.append("  none")
     for item in items:
         suffix = f" - {item.reason}" if item.reason else ""
-        lines.append(f"  {_display(item.path, root)} [scope {item.scope}/**, {item.status}, {item.size_bytes} bytes]{suffix}")
+        lines.append(
+            f"  {_display(item.path, root)} [scope {item.scope}/**, {item.status}, {item.size_bytes} bytes]{suffix}"
+        )
     return "\n".join(lines)
 
 
@@ -58,7 +67,9 @@ def render_doctor(items: list[Diagnostic], root: str) -> str:
         lines.append("No structural problems detected.")
     for item in items:
         lines.append(f"[{item.severity.upper()}] {item.code} {item.path}: {item.message}")
-    lines.append("Diagnostics describe file discovery structure, not whether Codex will follow an instruction.")
+    lines.append(
+        "Diagnostics describe file discovery structure, not whether Codex will follow an instruction."
+    )
     return "\n".join(lines)
 
 

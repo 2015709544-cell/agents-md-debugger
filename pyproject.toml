@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agents-md-debugger"
-version = "0.1.0"
+version = "0.1.1"
 description = "Explain which AGENTS.md instructions Codex discovers for any path"
 readme = "README.md"
 requires-python = ">=3.11"

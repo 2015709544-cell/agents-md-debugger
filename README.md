@@ -1,5 +1,10 @@
 # agents-md-debugger
 
+[![CI](https://github.com/2015709544-cell/agents-md-debugger/actions/workflows/ci.yml/badge.svg)](https://github.com/2015709544-cell/agents-md-debugger/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/v/release/2015709544-cell/agents-md-debugger)](https://github.com/2015709544-cell/agents-md-debugger/releases)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
+[![MIT License](https://img.shields.io/github/license/2015709544-cell/agents-md-debugger)](LICENSE)
+
 See exactly which `AGENTS.md` instructions Codex is expected to discover for any file in a repository—without starting a model session.
 
 ```text
@@ -32,13 +37,20 @@ Layered `AGENTS.md` files are useful, but discovery problems are hard to inspect
 Python 3.11+:
 
 ```bash
-python -m pip install .
+python -m pip install "git+https://github.com/2015709544-cell/agents-md-debugger.git@v0.1.1"
+agents-md-debugger --version
 ```
 
 Development install:
 
 ```bash
 python -m pip install -e ".[dev]"
+```
+
+Uninstall:
+
+```bash
+python -m pip uninstall agents-md-debugger
 ```
 
 ## Usage
@@ -51,6 +63,25 @@ agents-md-debugger doctor . --fail-on warning
 ```
 
 The shorter `amd-debug` alias provides the same commands.
+
+### Try the included example
+
+From this repository's root:
+
+```bash
+agents-md-debugger explain examples/demo-repo/src/api/user.py --project-root examples/demo-repo
+```
+
+The checked-in fixture produces this three-level chain (absolute paths above it are omitted):
+
+```text
+Project instruction budget: 263/32768 bytes
+
+Effective project instruction chain (root -> working directory):
+  1. AGENTS.md [scope ./**, 113/113 bytes, loaded]
+  2. src/AGENTS.md [scope src/**, 74/74 bytes, loaded]
+  3. src/api/AGENTS.override.md [scope src/api/**, 76/76 bytes, loaded]
+```
 
 By default the tool reads these public Codex settings from `$CODEX_HOME/config.toml` (or `~/.codex/config.toml`):
 
@@ -93,7 +124,7 @@ Diagnostics are structural hints. The tool does not decide whether Markdown inst
 
 ## GitHub Action
 
-After the first tagged release:
+Use the tagged release in another repository:
 
 ```yaml
 name: AGENTS.md doctor
@@ -107,7 +138,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: 2015709544-cell/agents-md-debugger@v0.1.0
+      - uses: 2015709544-cell/agents-md-debugger@v0.1.1
         with:
           fail-on: warning
 ```

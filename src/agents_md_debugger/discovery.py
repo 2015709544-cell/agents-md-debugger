@@ -66,7 +66,9 @@ def _global_files(settings: Settings) -> tuple[InstructionFile, ...]:
     return ()
 
 
-def explain_path(target: str | Path, settings: Settings, root: str | Path | None = None) -> Explanation:
+def explain_path(
+    target: str | Path, settings: Settings, root: str | Path | None = None
+) -> Explanation:
     target_path = Path(target).expanduser().resolve()
     working_dir = target_path if target_path.is_dir() else target_path.parent
     if not working_dir.is_dir():
