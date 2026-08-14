@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: 2015709544-cell/agents-md-debugger@v1
+      - uses: 2015709544-cell/agents-md-debugger@v0.1.0
         with:
           fail-on: warning
 ```
