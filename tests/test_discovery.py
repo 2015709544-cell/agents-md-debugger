@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-import agents_md_debugger.discovery as discovery
+from agents_md_debugger import discovery
 from agents_md_debugger.cli import main
 from agents_md_debugger.config import load_settings
 from agents_md_debugger.discovery import explain_path, find_project_root, scan_tree
