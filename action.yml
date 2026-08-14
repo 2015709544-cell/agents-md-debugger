@@ -1,0 +1,24 @@
+name: AGENTS.md Doctor
+description: Diagnose ambiguous, empty, oversized, or duplicated Codex instruction files
+branding:
+  icon: search
+  color: blue
+inputs:
+  root:
+    description: Repository root to inspect
+    required: false
+    default: .
+  fail-on:
+    description: Failure threshold (warning, error, or never)
+    required: false
+    default: never
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - shell: bash
+      run: python -m pip install "${{ github.action_path }}"
+    - shell: bash
+      run: agents-md-debugger doctor "${{ inputs.root }}" --fail-on "${{ inputs.fail-on }}"

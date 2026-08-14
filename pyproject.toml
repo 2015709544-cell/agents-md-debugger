@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agents-md-debugger"
+version = "0.1.0"
+description = "Explain which AGENTS.md instructions Codex discovers for any path"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+keywords = ["codex", "agents-md", "developer-tools", "debugger", "cli"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/2015709544-cell/agents-md-debugger"
+Repository = "https://github.com/2015709544-cell/agents-md-debugger"
+Issues = "https://github.com/2015709544-cell/agents-md-debugger/issues"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "build>=1.2"]
+
+[project.scripts]
+agents-md-debugger = "agents_md_debugger.cli:main"
+amd-debug = "agents_md_debugger.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agents_md_debugger"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
