@@ -37,7 +37,7 @@ Layered `AGENTS.md` files are useful, but discovery problems are hard to inspect
 Python 3.11+:
 
 ```bash
-python -m pip install "git+https://github.com/2015709544-cell/agents-md-debugger.git@v0.1.1"
+python -m pip install agents-md-debugger
 agents-md-debugger --version
 ```
 
